@@ -1,0 +1,13 @@
+{
+  "name": "keywords",
+  "owner": {
+    "name": "KeyWords"
+  },
+  "plugins": [
+    {
+      "name": "keywords",
+      "source": "./plugins/keywords",
+      "description": "Skill /postular: completa formularios de postulación desde la cola de KeyWords y registra el resultado."
+    }
+  ]
+}
