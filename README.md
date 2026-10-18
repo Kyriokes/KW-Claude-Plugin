@@ -1,4 +1,4 @@
-# KW-Cloude-Plugin
+# KW-Claude-Plugin
 
 Plugin de KeyWords para Claude Code, para que cualquier usuario de KeyWords lo instale sin acceso al código de la app.
 
@@ -7,7 +7,7 @@ Plugin de KeyWords para Claude Code, para que cualquier usuario de KeyWords lo i
 1. En KeyWords: **Mi perfil → Conectar Claude Code → Generar token** y correr el comando `claude mcp add ...` que aparece. Eso conecta el servidor MCP con tu cuenta.
 2. En Claude Code:
    ```
-   /plugin marketplace add Kyriokes/KW-Cloude-Plugin
+   /plugin marketplace add Kyriokes/KW-Claude-Plugin
    /plugin install keywords@keywords
    ```
 3. Tener la extensión **Claude in Chrome** conectada y la sesión iniciada en los portales donde vayas a postular.
