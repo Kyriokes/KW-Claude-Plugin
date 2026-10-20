@@ -39,6 +39,8 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
       - `ADAPT`: reescribila para esta oferta siguiendo `writingGuide`, con los mismos hechos, nombrando algo concreto de la oferta. Mirá `lastAdapted` para no contradecir lo que ya se envió.
       - Sin plantilla: si es un dato, preguntale al usuario (o `NEEDS_USER`). Si es texto libre sobre vos o tu experiencia, escribilo desde el CV con `writingGuide` y marcalo como nuevo en el resumen.
 
+      En cualquier modo, la plantilla puede traer variantes (por moneda, país, idioma o tecnología): usá solo la que corresponde a esta oferta, sin cambiar sus datos. Si la plantilla es una instrucción ("Answer with…", "Use the one in…", "Pick the project…") en vez del texto a enviar, seguila y escribí la respuesta; nunca pegues la instrucción en el formulario.
+
       El largo lo marca el campo: una o dos frases en un campo corto, hasta 80 palabras en un cuadro de texto.
    5. **CV:** subilo con `file_upload` usando el `filePath` del CV en el idioma de la oferta. Si no hay uno de ese idioma, usá el activo (`isPrimary`). Si el formulario pide el link del CV, usá su `fileUrl`. Si el archivo no se puede leer, pedile al usuario que lo adjunte y esperá.
    6. **Carta:** usá la de `get_application`. Si no hay, escribí una en el idioma de la oferta con los datos de la carta modelo de `get_candidate`:
