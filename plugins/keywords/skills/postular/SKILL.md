@@ -63,6 +63,8 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
 | Greenhouse (`greenhouse.io`) | En la misma página, debajo de la descripción | El CV y la carta van en campos de archivo o de texto. Las preguntas de diversidad del final son voluntarias: usá la plantilla. |
 | Lever (`jobs.lever.co`) | Botón "Apply" → página `/apply` | Nombre completo en un solo campo. La carta va en "Additional information". Puede aparecer un CAPTCHA al enviar → `NEEDS_USER`. |
 | Ashby (`jobs.ashbyhq.com`) | Pestaña "Application" | Al subir el CV algunos campos se completan solos: revisalos antes de seguir. |
+| Workable (`apply.workable.com`) | `applyUrl` lleva directo al formulario (`/apply`) | Al subir el CV algunos campos se completan solos: revisalos antes de seguir. |
+| SmartRecruiters (`jobs.smartrecruiters.com`) | `applyUrl` abre el formulario | Puede ofrecer completar con LinkedIn: no lo uses, completá a mano. |
 | Himalayas, Jobicy, Remote OK, Remotive | La página es un aviso: el botón de postular lleva al sitio de la empresa | Seguí ese botón y postulá en el formulario de la empresa. |
 | Get on Board | Postulación dentro de Get on Board | Necesita la sesión del usuario en Get on Board. Sin sesión → `NEEDS_USER`. |
 | Workday, HiringRoom, Computrabajo, Bumeran | Piden crear una cuenta | No los abras: KeyWords ya las marca como `UNSUPPORTED`. |
