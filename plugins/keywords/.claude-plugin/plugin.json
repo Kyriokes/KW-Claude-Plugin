@@ -1,7 +1,7 @@
 {
   "name": "keywords",
   "description": "Postulaciones asistidas con KeyWords: Claude completa los formularios de tus ofertas aprobadas, te pide confirmación antes de enviar y registra lo que respondió.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "KeyWords"
   }

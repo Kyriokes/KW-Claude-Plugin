@@ -48,7 +48,7 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
       ¿Envío esta postulación?
 
    9. Con un "sí", hacé clic en enviar y verificá que aparezca la confirmación del portal. Con cambios, corregí y volvé a preguntar. Si el usuario la descarta, registrá `SKIPPED`.
-   10. `record_result` con el estado (`APPLIED`, `NEEDS_USER` o `SKIPPED`), **todas** las preguntas con lo que se respondió (también las de plantilla), la carta enviada y `cvVariant` si adaptaste el CV. Si algo quedó pendiente, explicalo en `notes`.
+   10. `record_result` con el estado (`APPLIED`, `NEEDS_USER` o `SKIPPED`), **todas** las preguntas con lo que se respondió (también las de plantilla), la carta enviada y `cvVariant` si adaptaste el CV. Si el formulario estaba en otro sitio que `applyUrl` (por ejemplo, al seguir el botón de un portal hasta la página de la empresa), mandá ese link en `formUrl`: así KeyWords sugiere seguir a esa empresa. Si algo quedó pendiente, explicalo en `notes`.
    11. Si el usuario respondió una pregunta nueva, ofrecé guardarla con `save_answer_template` (con tags como `salary`, `visa`, `notice`, `experience`).
    12. Cerrá la pestaña.
 5. **Cierre:** resumí:
