@@ -18,7 +18,7 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
 
 ## Flujo
 
-1. **Preparación (una vez por sesión):** `get_candidate` y `list_answer_templates`. Anotá los CV de `cvFiles` (idioma, `filePath` para subir y `fileUrl` para los campos que piden el link) y el video de `mediaAssets`. Si `cvFiles` no tiene rutas, usá la plantilla con tag `cv-file`. No los vuelvas a pedir.
+1. **Preparación (una vez por sesión):** `get_candidate` y `list_answer_templates`. Anotá los CV de `cvFiles` (idioma, `filePath` para subir y `fileUrl` para los campos que piden el link) y el video de `mediaAssets`. Si `cvFiles` no tiene rutas, usá la plantilla con tag `cv-file`. No los vuelvas a pedir. Guardá también `writingGuide` de `get_candidate`: es la guía para todo lo que escribas.
 2. **Buscar ofertas nuevas:** `search_now`. Si responde que se buscó hace poco, seguí sin buscar.
 3. **Revisar la cola:** `get_queue` con `status: "READY"` y `limit: 10`. Si hay ofertas, mostralas con esta tabla y nada más:
 
@@ -34,7 +34,12 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
    1. `get_application`: trae la carta, las respuestas preparadas y el CV adaptado (si no hay, usá el CV activo).
    2. Abrí `applyUrl` en una pestaña nueva y reconocé el portal (ver "Notas por portal").
    3. Leé el formulario con `find` o `read_page` (filtro `interactive`). **Evitá las capturas de pantalla**: usalas solo si no podés ubicar un campo de otra forma.
-   4. Completá con `form_input`. Para cada pregunta buscá primero una plantilla. Adaptá la redacción y el idioma al formulario sin cambiar los datos (salario, fechas, visa, años).
+   4. Completá con `form_input`. Para cada pregunta buscá primero una plantilla y respetá su `mode`:
+      - `VERBATIM`: copiala tal cual; solo traducila si el formulario está en otro idioma. Los datos (sueldo, fechas, visa, años, lugar) no se tocan.
+      - `ADAPT`: reescribila para esta oferta siguiendo `writingGuide`, con los mismos hechos, nombrando algo concreto de la oferta. Mirá `lastAdapted` para no contradecir lo que ya se envió.
+      - Sin plantilla: si es un dato, preguntale al usuario (o `NEEDS_USER`). Si es texto libre sobre vos o tu experiencia, escribilo desde el CV con `writingGuide` y marcalo como nuevo en el resumen.
+
+      El largo lo marca el campo: una o dos frases en un campo corto, hasta 80 palabras en un cuadro de texto.
    5. **CV:** subilo con `file_upload` usando el `filePath` del CV en el idioma de la oferta. Si no hay uno de ese idioma, usá el activo (`isPrimary`). Si el formulario pide el link del CV, usá su `fileUrl`. Si el archivo no se puede leer, pedile al usuario que lo adjunte y esperá.
    6. **Carta:** usá la de `get_application`. Si no hay, escribí una en el idioma de la oferta con los datos de la carta modelo de `get_candidate`:
       - de 80 a 130 palabras, en 2 o 3 párrafos cortos;
@@ -52,13 +57,18 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
       ¿Envío esta postulación?
 
    9. Con un "sí", hacé clic en enviar y verificá que aparezca la confirmación del portal. Con cambios, corregí y volvé a preguntar. Si el usuario la descarta, registrá `SKIPPED`.
-   10. `record_result` con el estado (`APPLIED`, `NEEDS_USER` o `SKIPPED`), **todas** las preguntas con lo que se respondió (también las de plantilla), la carta enviada y `cvVariant` si adaptaste el CV. Si el formulario estaba en otro sitio que `applyUrl` (por ejemplo, al seguir el botón de un portal hasta la página de la empresa), mandá ese link en `formUrl`: así KeyWords sugiere seguir a esa empresa. Si algo quedó pendiente, explicalo en `notes`.
-   11. Si el usuario respondió una pregunta nueva, ofrecé guardarla con `save_answer_template` (con tags como `salary`, `visa`, `notice`, `experience`).
+   10. `record_result` con el estado (`APPLIED`, `NEEDS_USER` o `SKIPPED`), **todas** las preguntas con lo que se respondió (también las de plantilla), cada una con su `origin` (`TEMPLATE`, `ADAPTED`, `NEW` o `AGENT`), la carta enviada y `cvVariant` si adaptaste el CV. Si el formulario estaba en otro sitio que `applyUrl` (por ejemplo, al seguir el botón de un portal hasta la página de la empresa), mandá ese link en `formUrl`: así KeyWords sugiere seguir a esa empresa. Si algo quedó pendiente, explicalo en `notes`.
+   11. Si el usuario respondió una pregunta nueva, ofrecé guardarla con `save_answer_template` (tags como `salary`, `visa`, `notice`, `experience`) y elegí el `mode`: `VERBATIM` si es un dato, `ADAPT` si es texto libre.
    12. Cerrá la pestaña.
 5. **Cierre:** resumí:
    - cuántas se enviaron;
    - las que quedaron en `NEEDS_USER` y por qué (agrupá las "Pide video");
    - las que tiene que enviar el usuario (`UNSUPPORTED` y Easy Apply), con su link.
+6. **Revisión semanal:** si el usuario la pide, llamá a `get_search_stats` con `days: 7` y resumí qué portales trajeron más de sus puestos, cuántas se enviaron, cuántas entrevistas hubo y qué motivo de descarte o pregunta sin plantilla se repite.
+
+## Cómo escribir
+
+Todo lo que redactes (respuestas `ADAPT`, respuestas nuevas, cartas) sigue `writingGuide`. En resumen: como un mail de una persona, concreto, sin autoelogios ni fórmulas ("me dirijo a ustedes", "I'm thrilled", "leverage"), en el idioma del formulario, con el largo que pide el campo. Nunca inventes datos ni experiencia que no esté en el CV.
 
 ## Notas por portal
 
