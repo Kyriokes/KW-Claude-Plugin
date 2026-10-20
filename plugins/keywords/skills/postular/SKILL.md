@@ -18,7 +18,7 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
 
 ## Flujo
 
-1. **Preparación (una vez por sesión):** `get_candidate` y `list_answer_templates`. Anotá la plantilla con tag `cv-file` (ruta del CV en PDF, uno por idioma) y el video de `mediaAssets`. No los vuelvas a pedir.
+1. **Preparación (una vez por sesión):** `get_candidate` y `list_answer_templates`. Anotá los CV de `cvFiles` (idioma, `filePath` para subir y `fileUrl` para los campos que piden el link) y el video de `mediaAssets`. Si `cvFiles` no tiene rutas, usá la plantilla con tag `cv-file`. No los vuelvas a pedir.
 2. **Buscar ofertas nuevas:** `search_now`. Si responde que se buscó hace poco, seguí sin buscar.
 3. **Revisar la cola:** `get_queue` con `status: "READY"` y `limit: 10`. Si hay ofertas, mostralas con esta tabla y nada más:
 
@@ -35,7 +35,7 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
    2. Abrí `applyUrl` en una pestaña nueva y reconocé el portal (ver "Notas por portal").
    3. Leé el formulario con `find` o `read_page` (filtro `interactive`). **Evitá las capturas de pantalla**: usalas solo si no podés ubicar un campo de otra forma.
    4. Completá con `form_input`. Para cada pregunta buscá primero una plantilla. Adaptá la redacción y el idioma al formulario sin cambiar los datos (salario, fechas, visa, años).
-   5. **CV:** subilo con `file_upload` usando la ruta de la plantilla `cv-file` en el idioma de la oferta. Si el archivo no se puede leer, pedile al usuario que lo adjunte y esperá.
+   5. **CV:** subilo con `file_upload` usando el `filePath` del CV en el idioma de la oferta. Si no hay uno de ese idioma, usá el activo (`isPrimary`). Si el formulario pide el link del CV, usá su `fileUrl`. Si el archivo no se puede leer, pedile al usuario que lo adjunte y esperá.
    6. **Carta:** usá la de `get_application`. Si no hay, adaptá la carta modelo de `get_candidate` en el idioma de la oferta, sin dejar marcadores como [Empresa].
    7. **Video:** si es obligatorio y no hay video en `mediaAssets`, no completes nada más. Registrá `NEEDS_USER` con la nota "Pide video" y pasá a la siguiente. Si es opcional, dejalo vacío.
    8. **Antes de enviar**, mostrá exactamente este resumen:
