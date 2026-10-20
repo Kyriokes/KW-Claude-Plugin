@@ -36,7 +36,11 @@ Requiere el servidor MCP `keywords` y Claude en Chrome. Si falta el MCP, indicá
    3. Leé el formulario con `find` o `read_page` (filtro `interactive`). **Evitá las capturas de pantalla**: usalas solo si no podés ubicar un campo de otra forma.
    4. Completá con `form_input`. Para cada pregunta buscá primero una plantilla. Adaptá la redacción y el idioma al formulario sin cambiar los datos (salario, fechas, visa, años).
    5. **CV:** subilo con `file_upload` usando el `filePath` del CV en el idioma de la oferta. Si no hay uno de ese idioma, usá el activo (`isPrimary`). Si el formulario pide el link del CV, usá su `fileUrl`. Si el archivo no se puede leer, pedile al usuario que lo adjunte y esperá.
-   6. **Carta:** usá la de `get_application`. Si no hay, adaptá la carta modelo de `get_candidate` en el idioma de la oferta, sin dejar marcadores como [Empresa].
+   6. **Carta:** usá la de `get_application`. Si no hay, escribí una en el idioma de la oferta con los datos de la carta modelo de `get_candidate`:
+      - de 80 a 130 palabras, en 2 o 3 párrafos cortos;
+      - saludo simple ("Hola equipo de X," / "Hi X team,");
+      - tono de mail, sin título ni asunto ni fórmulas solemnes;
+      - sin marcadores como [Empresa].
    7. **Video:** si es obligatorio y no hay video en `mediaAssets`, no completes nada más. Registrá `NEEDS_USER` con la nota "Pide video" y pasá a la siguiente. Si es opcional, dejalo vacío.
    8. **Antes de enviar**, mostrá exactamente este resumen:
 
